@@ -1,0 +1,43 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('login_logs', function (Blueprint $table) {
+            $table->id();
+            $table->enum('type', [
+                'school',
+                'platform',
+            ]);
+            $table->integer('user_id')->nullable();
+
+            $table->string('email', 255);
+
+            $table->enum('status', [
+                'success',
+                'failed',
+            ]);
+
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
+
+            $table->timestamp('logged_in_at')->useCurrent();
+
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrentOnUpdate();
+
+            $table->index(['email', 'status', 'type']);
+            $table->index('logged_in_at');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('login_logs');
+    }
+};

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>SMS | Login</title>
+    <title>SMS Platform | Login</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -47,12 +47,18 @@
                             alt="Login">
                     </div>
 
+                    @if ($errors->has('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ $errors->first('error') }}
+                        </div>
+                    @endif
+
                     <!-- Login Form -->
-                    <form class="form-auth-small" action="{{ route('school.login.form') }}" method='post'>
+                    <form class="form-auth-small" action="{{ route('platform.login.form') }}" method='post'>
                         @csrf
                         <div class="text-center mb-4">
                             <h4 class="font-weight-bold mb-1 roboto-slab-font">
-                                Welcome Back
+                                School Management System Platform
                             </h4>
                             <p class="text-muted mb-0">
                                 Login to your account
@@ -65,8 +71,9 @@
                                 Email Address
                             </label>
 
-                            <input type="email" class="form-control" id="signin-email" placeholder="Enter your email"
-                                autocomplete="off" name='email' value='{{ old('email') }}'>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                id="signin-email" placeholder="Enter your email" autocomplete="off" name='email'
+                                value='{{ old('email') }}'>
                             @error('email')
                                 <span class='text-danger'>{{ $message }}</span>
                             @enderror
@@ -78,8 +85,8 @@
                                 Password
                             </label>
 
-                            <input type="password" class="form-control" id="signin-password"
-                                placeholder="Enter your password" name='password'>
+                            <input type="password" class="form-control  @error('email') is-invalid @enderror"
+                                id="signin-password" placeholder="Enter your password" name='password'>
                             @error('password')
                                 <span class='text-danger'>{{ $message }}</span>
                             @enderror
